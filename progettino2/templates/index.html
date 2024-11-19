@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <form action="/aggiungi" method="post">
+        <input type="text" name="elemento" placeholder="Aggiungi un elemento"required>
+        <button type="submit">Aggiungi</button>
+    </form>
+
+    <h1>La tua Lista della Spesa</h1>
+    {% if lista %}    <!--utilizziamo l'if per verificare se nella lista c'è qualche elemento-->
+        <ul>
+            {% for elemento in lista %} <!--utilizziamo il for per scorrere tutti gli elementi della lista-->
+                <li>{{ elemento }}</li>     <!--stampiamo tutti gli elementi della lista-->
+            {% endfor %}
+        </ul>
+    {% else %}  
+        <p>La lista è vuota.</p>. <!--in questo caso se la lista è vuota stampa la stringa-->
+    {% endif %}
+</body>
+</html>
