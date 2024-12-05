@@ -14,7 +14,12 @@
     {% if lista %}    <!--utilizziamo l'if per verificare se nella lista c'è qualche elemento-->
         <ul>
             {% for elemento in lista %} <!--utilizziamo il for per scorrere tutti gli elementi della lista-->
-                <li>{{ elemento }}</li>     <!--stampiamo tutti gli elementi della lista-->
+                <li>
+                    {{ elemento }}
+                    <form action="/rimuovi/{{ loop.index0 }}" method="post"style="display:inline;">
+                        <button type="submit">Rimuovi</button>
+                    </form>
+                </li>     <!--stampiamo tutti gli elementi della lista-->
             {% endfor %}
         </ul>
     {% else %}  
