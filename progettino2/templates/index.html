@@ -1,29 +1,157 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
+    <title>Lista della Spesa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">    
+</head> 
 <body>
-    <form action="/aggiungi" method="post">
-        <input type="text" name="elemento" placeholder="Aggiungi un elemento"required>
+    <style>/* General Reset */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Page Header */
+        h1 {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 2.5rem;
+            color: #007bff;
+        }
+        
+        /* Form Styling */
+        form {
+            margin: 10px auto;
+            text-align: center;
+        }
+        
+        form input[type="text"] {
+            padding: 10px;
+            width: 70%;
+            max-width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        form button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        form button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* List Styling */
+        ul {
+            list-style: none;
+            padding: 0;
+            max-width: 500px;
+            margin: 20px auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        li:last-child {
+            border-bottom: none;
+        }
+        
+        li form {
+            margin: 0;
+        }
+        
+        li button {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        li button:hover {
+            background-color: #a71d2a;
+        }
+        
+        /* Svuota Lista Button */
+        form[action="/svuota"] {
+            margin: 20px auto;
+            text-align: center;
+        }
+        
+        form[action="/svuota"] button {
+            padding: 10px 20px;
+            background-color: #ffc107;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        form[action="/svuota"] button:hover {
+            background-color: #e0a800;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            form input[type="text"] {
+                width: 90%;
+            }
+        
+            ul {
+                width: 90%;
+            }
+        }
+        </style>
+    <!-- CSS Per rendere più bello il sito -->
+    <h1>Lista della Spesa</h1>
+
+    <!-- Form per aggiungere un nuovo elemento alla lista -->
+    <form action="/aggiungi" method="POST">
+        <input type="text" name="elemento" placeholder="Nuovo elemento" required>
         <button type="submit">Aggiungi</button>
     </form>
 
-    <h1>La tua Lista della Spesa</h1>
-    {% if lista %}    <!--utilizziamo l'if per verificare se nella lista c'è qualche elemento-->
-        <ul>
-            {% for elemento in lista %} <!--utilizziamo il for per scorrere tutti gli elementi della lista-->
-                <li>
-                    {{ elemento }}
-                    <form action="/rimuovi/{{ loop.index0 }}" method="post"style="display:inline;">
-                        <button type="submit">Rimuovi</button>
-                    </form>
-                </li>     <!--stampiamo tutti gli elementi della lista-->
-            {% endfor %}
-        </ul>
-    {% else %}  
-        <p>La lista è vuota.</p>. <!--in questo caso se la lista è vuota stampa la stringa-->
-    {% endif %}
+    <ul>
+        <!-- Ciclo for per mostrare tutti gli elementi nella lista -->
+        {% for item in elementi %}
+        <li>
+            {{ item.elemento }}
+            <!-- Form per rimuovere un elemento specifico, identificato dall'ID -->
+            <form action="/rimuovi/{{ item.id }}" method="POST" style="display:inline;">
+                <button type="submit">Rimuovi</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    <!-- Form per svuotare completamente la lista -->
+    <form action="/svuota" method="POST">
+        <button type="submit">Svuota Lista</button>
+    </form>
 </body>
 </html>
